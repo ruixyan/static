@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'MachinaRegular';
+    src: url('NeueMachina-Regular.otf');
+  }
+
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+
+  }
+  
+  body {
+    transition: background 1s ease-in-out;
+    cursor: none;
+  }
+  
+  .section {
+    display: flex;
+    color: #F2F0EF;
+    font-family: 'MachinaRegular', sans-serif;
+    line-height: 5rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    margin-top: 4rem;
+  }
+
+  #whiteText {
+    color: #F2F0EF;
+    justify-content: right;
+    text-align: right;
+  }
+
+  #blackText {
+    color: #100e0e;
+  }
+
+  #enterButton {
+    position: absolute;
+    top: 300%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 4rem;
+    font-size: 18px;
+    background-color: #100e0e;
+    color: #F2F0EF;
+    border: none;
+    border-radius: 5px;
+    cursor: none;
+    z-index: 2; /* Ensure the button is above the canvas */
+    font-family: 'MachinaRegular', sans-serif;
+  }
+
+  .cursor {
+    width: 5px;
+    height: 5px;
+    background-color: #F2F0EF;
+    mix-blend-mode: difference;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 100;
+    pointer-events: none;
+    transform: translate(-50%, -50%)
+    
+  }
+  

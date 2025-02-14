@@ -1,0 +1,71 @@
+@font-face {
+  font-family: 'MachinaBold';
+  src: url('NeueMachina-Ultrabold.otf');
+}
+
+@font-face {
+  font-family: 'MachinaRegular';
+  src: url('NeueMachina-Regular.otf');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  background-color: rgba(0, 0, 0);
+  /*filter: url(noise.svg#noiseFilter);*/
+  cursor: none;
+  z-index: 0;
+}
+
+#enterButton {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  z-index: 2; /* Ensure the button is above the canvas */
+  font-family: 'MachinaRegular', sans-serif;
+  cursor: none;
+}
+
+.author {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #000000;
+  color: rgba(255, 255, 255, 0.5);
+  border: none;
+  border-radius: 5px;
+  z-index: 2; /* Ensure the button is above the canvas */
+  font-family: 'MachinaRegular', sans-serif;
+}
+
+canvas {
+  display: block;
+  z-index: 1;
+}
+
+.cursor {
+  width: 5px;
+  height: 5px;
+  background-color: rgb(255, 255, 255);
+  mix-blend-mode: difference;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  transform: translate(-50%, -50%)
+}

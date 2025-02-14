@@ -1,0 +1,44 @@
+
+
+  @font-face {
+    font-family: 'MachinaRegular';
+    src: url('NeueMachina-Regular.otf');
+  }
+  
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000000;
+    cursor: none;
+  }
+
+  #enterButton {
+    position: absolute;
+    top: 90%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: none;
+    z-index: 2; /* Ensure the button is above the canvas */
+    font-family: 'MachinaRegular', sans-serif;
+  }
+
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    z-index: 100;
+    background-color: #fff;
+    pointer-events: none;
+    mix-blend-mode: difference;
+  }
