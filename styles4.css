@@ -14,22 +14,16 @@ body, html {
     cursor: none;
   }
 
-  #enterButton {
-    position: absolute;
-    top: 90%;
-    left: 90%;
-    transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #000000;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: none;
-    z-index: 2; /* Ensure the button is above the canvas */
-    font-family: 'MachinaRegular', sans-serif;
-  }
-
+/* Button Canvas */
+#particleButton {
+  position: absolute;
+  top: 80%;
+  left: 85%;
+  border-radius: 50%; /* Circular button */
+  background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
+  z-index: 1;
+  cursor: none;
+}
   .cursor {
     position: fixed;
     top: 0;
@@ -42,3 +36,23 @@ body, html {
     pointer-events: none;
     mix-blend-mode: difference;
   }
+
+  @media only screen and (max-width: 600px) {
+    
+    
+    #canvas {
+        width:390px;
+        height:844px;
+    }
+
+    /* Button Canvas */
+    #particleButton {
+      position: absolute;
+      top: 80%;
+      left: 75%;
+      border-radius: 50%; /* Circular button */
+      background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
+      z-index: 1;
+      cursor: none;
+    }
+}

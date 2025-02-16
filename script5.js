@@ -26,15 +26,36 @@ let particlesArray = [];
 const mouse = { x: null, y: null, radius: 100 }; // Mouse interaction radius
 let isMouseClicked = false;
 
+  // Function to calculate responsive font size
+  function getResponsiveFontSize(baseSize) {
+    const screenWidth = window.innerWidth;
+    const minWidth = 320; // Minimum screen width (e.g., mobile)
+    const maxWidth = 1200; // Maximum screen width (e.g., desktop)
+    const minFontSize = baseSize * 0.7; // Minimum font size (60% of base size)
+    const maxFontSize = baseSize; // Maximum font size (base size)
+
+    // Calculate font size based on screen width
+    if (screenWidth <= minWidth) return `${minFontSize}px`;
+    if (screenWidth >= maxWidth) return `${maxFontSize}px`;
+    return `${minFontSize + ((screenWidth - minWidth) / (maxWidth - minWidth)) * (maxFontSize - minFontSize)}px`;
+  }
+
 // Define multiple lines of text
 const textLines = [
-  { text: 'the static between strangers continues', font: 'bold 50px MachinaRegular' },
-  { text: 'in the bar. and afterwards', font: 'bold 50px MachinaRegular' },
-  { text: 'as we part our collars to the skin, the', font: 'bold 50px MachinaRegular' },
-  { text: 'naked dots like runners will possess us', font: 'bold 50px MachinaRegular' },
-  { text: 'immediately, and the change from', font: 'bold 50px MachinaRegular' },
-  { text: 'one century to another will take place', font: 'bold 50px MachinaRegular' }
+  { text: 'the static between strangers continues', font: `bold ${getResponsiveFontSize(50)} MachinaRegular` },
+  { text: 'in the bar. and afterwards', font: `bold ${getResponsiveFontSize(50)} MachinaRegular` },
+  { text: 'as we part our collars to the skin, the', font: `bold ${getResponsiveFontSize(50)} MachinaRegular` },
+  { text: 'naked dots like runners will possess us', font: `bold ${getResponsiveFontSize(50)} MachinaRegular` },
+  { text: 'immediately, and the change from', font: `bold ${getResponsiveFontSize(50)} MachinaRegular` },
+  { text: 'one century to another will take place', font: `bold ${getResponsiveFontSize(50)} MachinaRegular` },
 ];
+
+function updateTextLines(fontSize) {
+  return textLines.map(line => ({
+    ...line,
+    font: `bold ${fontSize}px MachinaRegular`
+  }));
+}
 
 class Particle {
   constructor(x, y, targetX, targetY) {
@@ -162,3 +183,34 @@ window.addEventListener('resize', () => {
 
 init();
 animate();
+
+// Function to handle media query changes
+function myFunction(x) {
+  if (x.matches) { // If media query matches (screen width <= 600px)
+    textLines = updateTextLines(25); // Update font size to 25px
+  } else {
+    textLines = updateTextLines(50); // Update font size to 50px
+  }
+
+  // Reinitialize particles or redraw canvas if needed
+  init(); // Assuming you have an `init` function to reinitialize the canvas
+}
+
+function myFunction(x) {
+  if (x.matches) { // If media query matches
+    //font size 25px
+  } else {
+   // font size 50px
+  }
+}
+
+// Create a MediaQueryList object
+var x = window.matchMedia("(max-width: 600px)")
+
+// Call listener function at run time
+myFunction(x);
+
+// Attach listener function on state changes
+x.addEventListener("change", function() {
+  myFunction(x);
+});

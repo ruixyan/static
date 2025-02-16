@@ -1,68 +1,117 @@
 @font-face {
-    font-family: 'MachinaRegular';
-    src: url('NeueMachina-Regular.otf');
-  }
+  font-family: 'MachinaRegular';
+  src: url('NeueMachina-Regular.otf');
+}
 
+@font-face {
+  font-family: 'MachinaBold';
+  src: url('NeueMachina-Ultrabold.otf');
+}
 
 * {
-    padding: 0;
-    box-sizing: border-box;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  }
+body {
+  transition: background 1s ease-in-out;
+  cursor: none;
+  margin-bottom: 25rem;
+}
+
+.section {
+  display: flex;
+  color: #F2F0EF;
+  font-family: 'MachinaRegular', sans-serif;
+  line-height: 5rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  margin-top: 4rem;
+}
+
+#whiteText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Right-align all child elements */
+  text-align: right; /* Right-align text */
+}
+
+.goOut {
+  align-self: center; /* Center only the .goOut div */
+  text-align: center; /* Center the text inside .goOut */
+  color: #F2F0EF;
+  font-family: 'MachinaRegular', sans-serif;
+  line-height: 5rem;
+  font-size: 2.5rem;
+  font-weight: 600;
   
-  body {
-    transition: background 1s ease-in-out;
-    cursor: none;
-  }
-  
+}
+
+#blackText {
+  color: #100e0e;
+}
+
+/* Button Canvas */
+#particleButton {
+  position: absolute;
+  top: 315%;
+  left: 47.5%;
+  border-radius: 50%; /* Circular button */
+  background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
+  z-index: 10;
+  cursor: none;
+}
+
+.cursor {
+  width: 5px;
+  height: 5px;
+  background-color: #F2F0EF;
+  mix-blend-mode: difference;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 100;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 600px) {
   .section {
-    display: flex;
-    color: #F2F0EF;
-    font-family: 'MachinaRegular', sans-serif;
-    line-height: 5rem;
-    font-size: 2.5rem;
-    font-weight: 600;
-    margin-left: 4rem;
-    margin-right: 4rem;
-    margin-top: 4rem;
-  }
-
-  #whiteText {
-    color: #F2F0EF;
-    justify-content: right;
-    text-align: right;
-  }
-
-  #blackText {
-    color: #100e0e;
+      display: flex;
+      color: #F2F0EF;
+      font-family: 'MachinaRegular', sans-serif;
+      line-height: 2.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      margin-top: 1rem;
   }
 
   #enterButton {
-    position: absolute;
-    top: 300%;
-    left: 90%;
-    transform: translate(-50%, -50%);
-    padding-bottom: 4rem;
-    font-size: 18px;
-    background-color: #100e0e;
-    color: #F2F0EF;
-    border: none;
-    border-radius: 5px;
-    cursor: none;
-    z-index: 2; /* Ensure the button is above the canvas */
-    font-family: 'MachinaRegular', sans-serif;
+      position: absolute;
+      top: 158%;
+      left: 50%;
+      font-size: 8px;
+  }
+
+  .author {
+      position: absolute;
+      top: 53%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 5px 10px;
+      font-size: 12px;
+      background-color: #000000;
+      color: rgba(255, 255, 255, 0.5);
+      border: none;
+      border-radius: 5px;
+      z-index: 2; /* Ensure the button is above the canvas */
+      font-family: 'MachinaRegular', sans-serif;
   }
 
   .cursor {
-    width: 5px;
-    height: 5px;
-    background-color: #F2F0EF;
-    mix-blend-mode: difference;
-    border-radius: 50%;
-    position: absolute;
-    z-index: 100;
-    pointer-events: none;
-    transform: translate(-50%, -50%)
-    
+      background-color: rgba(255, 255, 255, 0);
   }
-  
+}

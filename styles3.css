@@ -27,21 +27,6 @@
     z-index: -2;
   }
   
-  #enterButton {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: rgba(255, 255, 255, 0);
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 2; /* Ensure the button is above the canvas */
-    font-family: 'MachinaRegular', sans-serif;
-  }
   
   canvas {
     display: block;
@@ -58,6 +43,17 @@
     pointer-events: none;
     transform: translate(-50%, -50%)
   }
+
+  /* Button Canvas */
+#particleButton {
+  position: absolute;
+  top: 80%;
+  left: 47.5%;
+  border-radius: 50%; /* Circular button */
+  background-color: rgba(255, 255, 255, 0); /* Semi-transparent background */
+  z-index: 10;
+  cursor: none;
+}
   
   .spotlight {
     position: absolute;
