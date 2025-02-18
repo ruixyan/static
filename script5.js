@@ -86,10 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     update(mouse) {
       if (!!isMouseClicked) {
+        const cursor = document.querySelector('.cursor');
         // Before click: Random movement
         this.x += this.vx;
         this.y += this.vy;
         button.style.display = 'none';
+        cursor.style.display = 'none';
 
         // Randomize direction every 5 frames
         this.directionChangeCounter++;
