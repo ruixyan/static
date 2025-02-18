@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       draw() {
-          ctx.fillStyle = '#fff';
+          ctx.fillStyle = '#F2F0EF';
           ctx.beginPath();
           ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
           ctx.closePath();
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function init() {
       particlesArray = [];
       const text = 'static';
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = '#F2F0EF';
       ctx.font = 0.2 * window.innerWidth + "px MachinaBold";
       ctx.fillText(text, canvas.width / 2 - ctx.measureText(text).width / 2, canvas.height / 2);
 
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
           this.size = 0.65;
           this.speedX = (Math.random() - 0.5) * 2; // Faster horizontal speed
           this.speedY = (Math.random() - 0.5) * 2; // Faster vertical speed
-          this.color = "white"; // Set particle color to white
+          this.color = "#F2F0EF"; // Set particle color to white
           this.noiseScale = 0.01; // Scale for Perlin noise
           this.noiseOffsetX = Math.random() * 1000; // Random offset for noise
           this.noiseOffsetY = Math.random() * 1000; // Random offset for noise

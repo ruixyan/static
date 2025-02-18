@@ -8,21 +8,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Cursor Setup
   document.addEventListener("mousemove", (e) => {
+    const mainCursor = document.querySelector(".mainCursor");
     const cursor = document.querySelector(".spotlight");
     cursor.style.top = e.pageY + "px";
     cursor.style.left = e.pageX + "px";
+    mainCursor.style.top = e.pageY + "px";
+    mainCursor.style.left = e.pageX + "px";
   });
 
   const button = document.getElementById("particleButton");
 
   button.addEventListener('mouseover', () => {
-    const cursor = document.querySelector('.cursor');
-    cursor.style.transform = 'scale(4)'; // Scale up
+    const mainCursor = document.querySelector('.mainCursor');
+    mainCursor.style.transform = 'scale(4)'; // Scale up
   });
 
   button.addEventListener('mouseout', () => {
     const cursor = document.querySelector('.spotlight');
+    const mainCursor = document.querySelector('.mainCursor');
     cursor.style.transform = 'scale(1)'; // Reset to original size
+    mainCursor.style.transform = 'scale(1)';
   });
 
   // Main Particle System

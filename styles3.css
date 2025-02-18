@@ -44,6 +44,18 @@
     transform: translate(-50%, -50%)
   }
 
+  .mainCursor {
+    width: 5px;
+    height: 5px;
+    background-color: #F2F0EF;
+    mix-blend-mode: difference;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 100;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+  }
+  
   /* Button Canvas */
 #particleButton {
   position: absolute;
