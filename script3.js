@@ -7,28 +7,55 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.height = window.innerHeight;
 
   // Cursor Setup
+  const mainCursor = document.querySelector(".mainCursor");
+  const cursor = document.querySelector(".spotlight");
+
+  let mainCursorX = window.innerWidth / 2;
+  let mainCursorY = window.innerHeight / 2;
+  let cursorX = mainCursorX;
+  let cursorY = mainCursorY;
+
+  const lerpFactor = 0.05; // Controls the smoothness of the trailing effect (0.1 = 10% smoothing)
+
   document.addEventListener("mousemove", (e) => {
-    const mainCursor = document.querySelector(".mainCursor");
-    const cursor = document.querySelector(".spotlight");
-    cursor.style.top = e.pageY + "px";
-    cursor.style.left = e.pageX + "px";
-    mainCursor.style.top = e.pageY + "px";
-    mainCursor.style.left = e.pageX + "px";
+    // Update main cursor position
+    mainCursorX = e.pageX;
+    mainCursorY = e.pageY;
+    mainCursor.style.top = mainCursorY + "px";
+    mainCursor.style.left = mainCursorX + "px";
   });
 
   const button = document.getElementById("particleButton");
 
   button.addEventListener('mouseover', () => {
-    const mainCursor = document.querySelector('.mainCursor');
     mainCursor.style.transform = 'scale(4)'; // Scale up
   });
 
   button.addEventListener('mouseout', () => {
-    const cursor = document.querySelector('.spotlight');
-    const mainCursor = document.querySelector('.mainCursor');
     cursor.style.transform = 'scale(1)'; // Reset to original size
     mainCursor.style.transform = 'scale(1)';
   });
+
+  // Smoothing function for trailing cursor
+  function lerp(start, end, factor) {
+    return start + (end - start) * factor;
+  }
+
+  function animateCursors() {
+    // Smoothly move the trailing cursor toward the main cursor
+    cursorX = lerp(cursorX, mainCursorX, lerpFactor);
+    cursorY = lerp(cursorY, mainCursorY, lerpFactor);
+
+    // Update the trailing cursor position
+    cursor.style.top = cursorY + "px";
+    cursor.style.left = cursorX + "px";
+
+    // Repeat the animation
+    requestAnimationFrame(animateCursors);
+  }
+
+  // Start the cursor animation
+  animateCursors();
 
   // Main Particle System
   let particlesArray = [];
