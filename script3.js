@@ -96,8 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // After click: Move toward target position
         const dx = this.targetX - this.x;
         const dy = this.targetY - this.y;
-        this.x += dx / 28;
-        this.y += dy / 28;
+        this.x += dx / 18;
+        this.y += dy / 18;
 
         // Add jitter after forming the word
         if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {

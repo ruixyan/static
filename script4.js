@@ -29,18 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const text = "when language fails, as pretense,            do we refuse this arc forward, again, and        who needs us to determine  the haste?         i think about the future. we quarrel.         gaiety settles in the wards, and cruelty         the fingers of the lake, slowly abound.";
   const words = text.split(' '); // Split text into words
   const particles = [];
-  let isAssembled = false; // Track if the text is assembled
+  let isAssembled = true; // Start with the text assembled
 
   class WordParticle {
     constructor(word, targetX, targetY) {
       this.word = word;
       this.targetX = targetX; // Target x position for assembling
       this.targetY = targetY; // Target y position for assembling
-      this.x = Math.random() * canvas.width; // Random initial x
-      this.y = Math.random() * canvas.height; // Random initial y
+      this.x = targetX; // Start at the target position
+      this.y = targetY; // Start at the target position
       this.velocity = {
-        x: (Math.random() - 0.5) * 40, // Random horizontal speed
-        y: (Math.random() - 0.5) * 40, // Random vertical speed
+        x: (Math.random() - 0.5) * 20, // Random horizontal speed
+        y: (Math.random() - 0.5) * 20, // Random vertical speed
       };
       this.color = '#fff';
     }
@@ -61,17 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (this.x < 0 || this.x > canvas.width) this.velocity.x *= -1;
         if (this.y < 0 || this.y > canvas.height) this.velocity.y *= -1;
       } else {
-        // Move toward target position
-        const dx = this.targetX - this.x;
-        const dy = this.targetY - this.y;
-        this.x += dx * 0.05; // Adjust speed of assembly
-        this.y += dy * 0.05;
-
-        // Add jitter after forming the word
-        if (Math.abs(dx) < 1 && Math.abs(dy) < 1) {
-          this.x += (Math.random() - 0.5) * 8; // Small random jitter
-          this.y += (Math.random() - 0.5) * 8;
-        }
+        // Add jitter while staying near the target position
+        this.x = this.targetX + (Math.random() - 0.5) * 3; // Small random jitter
+        this.y = this.targetY + (Math.random() - 0.5) * 3;
       }
     }
   }
@@ -145,9 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
   animate();
 
-  // Handle click to assemble text
+  // Handle click to scatter text
   canvas.addEventListener('click', () => {
-    isAssembled = true;
+    isAssembled = !isAssembled; // Toggle between assembled and scattered states
   });
 
   // Handle window resize
