@@ -39,10 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
       this.x = targetX; // Start at the target position
       this.y = targetY; // Start at the target position
       this.velocity = {
-        x: (Math.random() - 0.5) * 20, // Random horizontal speed
-        y: (Math.random() - 0.5) * 20, // Random vertical speed
+        x: (Math.random() - 0.5) * 0.2, // Extremely slow horizontal speed
+        y: (Math.random() - 0.5) * 0.2, // Extremely slow vertical speed
       };
-      this.color = '#fff';
+      this.color = '#F2F0EF';
+      this.directionChangeCounter = 0;
+      this.directionChangeInterval = 240; // Change direction every 240 frames (very slow)
     }
 
     draw() {
@@ -57,13 +59,21 @@ document.addEventListener("DOMContentLoaded", () => {
         this.x += this.velocity.x;
         this.y += this.velocity.y;
 
+        // Change direction at a very slow rate
+        this.directionChangeCounter++;
+        if (this.directionChangeCounter > this.directionChangeInterval) {
+          this.velocity.x = (Math.random() - 0.5) * 0.2; // Extremely slow horizontal speed
+          this.velocity.y = (Math.random() - 0.5) * 0.2; // Extremely slow vertical speed
+          this.directionChangeCounter = 0; // Reset counter
+        }
+
         // Bounce off edges
         if (this.x < 0 || this.x > canvas.width) this.velocity.x *= -1;
         if (this.y < 0 || this.y > canvas.height) this.velocity.y *= -1;
       } else {
-        // Add jitter while staying near the target position
-        this.x = this.targetX + (Math.random() - 0.5) * 3; // Small random jitter
-        this.y = this.targetY + (Math.random() - 0.5) * 3;
+        // Add subtle jitter while staying near the target position
+        this.x = this.targetX + (Math.random() - 0.5); // Subtle random jitter
+        this.y = this.targetY + (Math.random() - 0.5);
       }
     }
   }
@@ -169,9 +179,9 @@ document.addEventListener("DOMContentLoaded", () => {
       this.x = x;
       this.y = y;
       this.size = 0.65;
-      this.speedX = (Math.random() - 0.5) * 2; // Faster horizontal speed
-      this.speedY = (Math.random() - 0.5) * 2; // Faster vertical speed
-      this.color = "white"; // Set particle color to white
+      this.speedX = (Math.random() - 0.5) * 0.2; // Extremely slow horizontal speed
+      this.speedY = (Math.random() - 0.5) * 0.2; // Extremely slow vertical speed
+      this.color = "#F2F0EF"; // Set particle color to white
       this.noiseScale = 0.01; // Scale for Perlin noise
       this.noiseOffsetX = Math.random() * 1000; // Random offset for noise
       this.noiseOffsetY = Math.random() * 1000; // Random offset for noise
@@ -182,8 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const noiseX = noise(this.noiseOffsetX) * 2 - 1; // Noise value between -1 and 1
       const noiseY = noise(this.noiseOffsetY) * 2 - 1; // Noise value between -1 and 1
 
-      this.speedX += noiseX * 0.1; // Apply noise to speed
-      this.speedY += noiseY * 0.1; // Apply noise to speed
+      this.speedX += noiseX * 0.01; // Very reduced noise impact on speed
+      this.speedY += noiseY * 0.01; // Very reduced noise impact on speed
 
       // Update particle position
       this.x += this.speedX;

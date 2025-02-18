@@ -10,7 +10,7 @@ body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background: #000000;
+    background: #100e0e;
     cursor: none;
   }
 
@@ -32,7 +32,7 @@ body, html {
     height: 5px;
     border-radius: 50%;
     z-index: 100;
-    background-color: #fff;
+    background-color: #F2F0EF;
     pointer-events: none;
     mix-blend-mode: difference;
   }
