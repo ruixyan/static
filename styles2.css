@@ -89,10 +89,20 @@ body {
       margin-top: 1rem;
   }
 
-  #enterButton {
+  .goOut {
+      align-self: center; /* Center only the .goOut div */
+      text-align: center; /* Center the text inside .goOut */
+      color: #F2F0EF;
+      font-family: 'MachinaRegular', sans-serif;
+      line-height: 2.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+  }
+
+  #particleButton {
       position: absolute;
-      top: 158%;
-      left: 50%;
+      top: 150%;
+      left: 40%;
       font-size: 8px;
   }
 

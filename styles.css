@@ -68,7 +68,7 @@ canvas {
 @media only screen and (max-width: 600px) {
   #enterButton {
     position: absolute;
-    top: 58%;
+    top: 80%;
     left: 50%;
 
     font-size: 8px;
