@@ -60,6 +60,8 @@ constructor(word, targetX, targetY) {
   this.directionChangeInterval = 50; // Change direction every 50 frames
   this.maxDistance = 5; // Maximum distance from target position
   this.isHovered = false; // Track if the particle is hovered
+
+
 }
 
 draw() {
@@ -75,6 +77,7 @@ update(mouse) {
   const dx = mouse.x - this.x;
   const dy = mouse.y - this.y;
   const distance = Math.sqrt(dx * dx + dy * dy);
+  const cursor = document.querySelector('.cursor');
 
   if (distance < mouse.radius) {
     this.isHovered = true; // Particle is hovered
@@ -191,9 +194,9 @@ init();
 animate();
 
   // Handle click to scatter text
-  canvas.addEventListener('click', () => {
-    isAssembled = !isAssembled; // Toggle between assembled and scattered states
-  });
+  // canvas.addEventListener('click', () => {
+  //   isAssembled = !isAssembled; // Toggle between assembled and scattered states
+  // });
 
   // Handle window resize
   window.addEventListener('resize', () => {
@@ -222,9 +225,9 @@ animate();
       this.x = x;
       this.y = y;
       this.size = 0.65;
-      this.speedX = (Math.random() - 0.5) * 0.2; // Extremely slow horizontal speed
-      this.speedY = (Math.random() - 0.5) * 0.2; // Extremely slow vertical speed
-      this.color = "#F2F0EF"; // Set particle color to white
+      this.speedX = (Math.random() - 0.5) * 2; // Faster horizontal speed
+      this.speedY = (Math.random() - 0.5) * 2; // Faster vertical speed
+      this.color = "white"; // Set particle color to white
       this.noiseScale = 0.01; // Scale for Perlin noise
       this.noiseOffsetX = Math.random() * 1000; // Random offset for noise
       this.noiseOffsetY = Math.random() * 1000; // Random offset for noise
@@ -235,8 +238,8 @@ animate();
       const noiseX = noise(this.noiseOffsetX) * 2 - 1; // Noise value between -1 and 1
       const noiseY = noise(this.noiseOffsetY) * 2 - 1; // Noise value between -1 and 1
 
-      this.speedX += noiseX * 0.01; // Very reduced noise impact on speed
-      this.speedY += noiseY * 0.01; // Very reduced noise impact on speed
+      this.speedX += noiseX * 0.1; // Apply noise to speed
+      this.speedY += noiseY * 0.1; // Apply noise to speed
 
       // Update particle position
       this.x += this.speedX;
@@ -274,7 +277,7 @@ animate();
     }
   }
 
-  // Simple Perlin noise function (can be replaced with a library like noisejs)
+  // Perlin Noise function
   function noise(offset) {
     return Math.sin(offset) * 0.5 + 0.5; // Simple sine-based noise
   }

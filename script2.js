@@ -105,7 +105,7 @@ class Particle {
     }
 }
 
-// Simple Perlin noise function (can be replaced with a library like noisejs)
+// Perlin noise function
 function noise(offset) {
     return Math.sin(offset) * 0.5 + 0.5; // Simple sine-based noise
 }
