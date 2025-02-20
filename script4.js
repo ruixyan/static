@@ -25,127 +25,170 @@ document.addEventListener("DOMContentLoaded", () => {
     cursor.style.transform = 'scale(1)'; // Reset to original size
   });
 
-  // Text and Particles Setup
-  const text = "when language fails, as pretense,            do we refuse this arc forward, again, and        who needs us to determine  the haste?         i think about the future. we quarrel.         gaiety settles in the wards, and cruelty         the fingers of the lake, slowly abound.";
-  const words = text.split(' '); // Split text into words
-  const particles = [];
-  let isAssembled = true; // Start with the text assembled
+// Main Canvas Setup
 
-  class WordParticle {
-    constructor(word, targetX, targetY) {
-      this.word = word;
-      this.targetX = targetX; // Target x position for assembling
-      this.targetY = targetY; // Target y position for assembling
-      this.x = targetX; // Start at the target position
-      this.y = targetY; // Start at the target position
-      this.velocity = {
-        x: (Math.random() - 0.5) * 0.2, // Extremely slow horizontal speed
-        y: (Math.random() - 0.5) * 0.2, // Extremely slow vertical speed
-      };
-      this.color = '#F2F0EF';
-      this.directionChangeCounter = 0;
-      this.directionChangeInterval = 240; // Change direction every 240 frames (very slow)
-    }
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    draw() {
-      ctx.font = 0.015 * window.innerWidth + "px MachinaRegular";
-      ctx.fillStyle = this.color;
-      ctx.fillText(this.word, this.x, this.y);
-    }
+// Cursor Setup
+const cursor = { x: null, y: null, radius: 40 }; // Cursor interaction radius
+document.addEventListener("mousemove", (e) => {
+cursor.x = e.x;
+cursor.y = e.y;
+});
 
-    update() {
-      if (!isAssembled) {
-        // Random movement
-        this.x += this.velocity.x;
-        this.y += this.velocity.y;
+// Text and Particles Setup
+const text = "when language fails, as pretense,            do we refuse this arc forward, again, and        who needs us to determine  the haste?         i think about the future. we quarrel.         gaiety settles in the wards, and cruelty         the fingers of the lake, slowly abound.";
+const words = text.split(' '); // Split text into words
+const particles = [];
+let isAssembled = true; // Start with the text assembled
 
-        // Change direction at a very slow rate
-        this.directionChangeCounter++;
-        if (this.directionChangeCounter > this.directionChangeInterval) {
-          this.velocity.x = (Math.random() - 0.5) * 0.2; // Extremely slow horizontal speed
-          this.velocity.y = (Math.random() - 0.5) * 0.2; // Extremely slow vertical speed
-          this.directionChangeCounter = 0; // Reset counter
-        }
+class WordParticle {
+constructor(word, targetX, targetY) {
+  this.word = word;
+  this.targetX = targetX; // Target x position for assembling
+  this.targetY = targetY; // Target y position for assembling
+  this.x = targetX; // Start at the target position
+  this.y = targetY; // Start at the target position
+  this.velocity = {
+    x: (Math.random() - 0.5) * 0.5, // Very slow horizontal speed
+    y: (Math.random() - 0.5) * 0.5, // Very slow vertical speed
+  };
+  this.color = '#F2F0EF';
+  this.alpha = 0.5; // Default opacity (50%)
+  this.directionChangeCounter = 0;
+  this.directionChangeInterval = 50; // Change direction every 50 frames
+  this.maxDistance = 5; // Maximum distance from target position
+  this.isHovered = false; // Track if the particle is hovered
+}
 
-        // Bounce off edges
-        if (this.x < 0 || this.x > canvas.width) this.velocity.x *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.velocity.y *= -1;
-      } else {
-        // Add subtle jitter while staying near the target position
-        this.x = this.targetX + (Math.random() - 0.5); // Subtle random jitter
-        this.y = this.targetY + (Math.random() - 0.5);
-      }
-    }
+draw() {
+  ctx.font = 0.015 * window.innerWidth + "px MachinaRegular";
+  ctx.globalAlpha = this.alpha; // Apply opacity
+  ctx.fillStyle = this.color;
+  ctx.fillText(this.word, this.x, this.y);
+  ctx.globalAlpha = 1; // Reset global alpha for other drawings
+}
+
+update(mouse) {
+  // Check if the cursor is near the particle
+  const dx = mouse.x - this.x;
+  const dy = mouse.y - this.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  if (distance < mouse.radius) {
+    this.isHovered = true; // Particle is hovered
+    this.alpha = 1; // Set opacity to 100% on hover
+  } else {
+    this.isHovered = false; // Particle is not hovered
+    this.alpha = 0.5; // Reset opacity to 50% when not hovered
   }
 
-  function init() {
-    particles.length = 0; // Clear existing particles
+  if (!isAssembled) {
+    // Random movement
+    if (!this.isHovered) {
+      // Only move if not hovered
+      this.x += this.velocity.x;
+      this.y += this.velocity.y;
 
-    const lineHeight = 0.04 * window.innerWidth; // Space between lines
-    const wordSpacing = 0.05 * window.innerWidth; // Space between words
-    let x = 0;
-    let y = 0;
-
-    // Calculate total width and height of the text block
-    let maxLineWidth = 0;
-    let totalHeight = 0;
-    let currentLineWidth = 0;
-    let currentLineHeight = lineHeight;
-
-    words.forEach(word => {
-      const wordWidth = ctx.measureText(word).width;
-
-      // Wrap text to next line if it exceeds canvas width
-      if (currentLineWidth + wordWidth > canvas.width - wordSpacing - 500) {
-        maxLineWidth = Math.max(maxLineWidth, currentLineWidth);
-        currentLineWidth = 0;
-        totalHeight += currentLineHeight;
+      // Change direction at a very slow rate
+      this.directionChangeCounter++;
+      if (this.directionChangeCounter > this.directionChangeInterval) {
+        this.velocity.x = (Math.random() - 0.5) * 0.5; // Very slow horizontal speed
+        this.velocity.y = (Math.random() - 0.5) * 0.5; // Very slow vertical speed
+        this.directionChangeCounter = 0; // Reset counter
       }
 
-      currentLineWidth += wordWidth + wordSpacing;
-    });
+      // Keep particles within a small radius of their target positions
+      const dxTarget = this.targetX - this.x;
+      const dyTarget = this.targetY - this.y;
+      const distanceTarget = Math.sqrt(dxTarget * dxTarget + dyTarget * dyTarget);
 
-    // Final adjustments for the last line
+      if (distanceTarget > this.maxDistance) {
+        // Move particle back toward the target position
+        this.x += dxTarget * 0.1;
+        this.y += dyTarget * 0.1;
+      }
+    }
+  } else {
+    // Add subtle jitter while staying near the target position
+    if (!this.isHovered) {
+      // Only jitter if not hovered
+      this.x = this.targetX + (Math.random() - 0.5) * 3; // Small random jitter
+      this.y = this.targetY + (Math.random() - 0.5) * 3;
+    }
+  }
+}
+}
+
+function init() {
+particles.length = 0; // Clear existing particles
+
+const lineHeight = 0.04 * window.innerWidth; // Space between lines
+const wordSpacing = 0.05 * window.innerWidth; // Space between words
+let x = 0;
+let y = 0;
+
+// Calculate total width and height of the text block
+let maxLineWidth = 0;
+let totalHeight = 0;
+let currentLineWidth = 0;
+let currentLineHeight = lineHeight;
+
+words.forEach(word => {
+  const wordWidth = ctx.measureText(word).width;
+
+  // Wrap text to next line if it exceeds canvas width
+  if (currentLineWidth + wordWidth > canvas.width - wordSpacing - 500) {
     maxLineWidth = Math.max(maxLineWidth, currentLineWidth);
+    currentLineWidth = 0;
     totalHeight += currentLineHeight;
+  }
 
-    // Calculate starting position for centered text
-    const startX = (canvas.width - maxLineWidth) / 4; // Center horizontally
-    const startY = (canvas.height - totalHeight) / 4; // Center vertically
+  currentLineWidth += wordWidth + wordSpacing;
+});
 
+// Final adjustments for the last line
+maxLineWidth = Math.max(maxLineWidth, currentLineWidth);
+totalHeight += currentLineHeight;
+
+// Calculate starting position for centered text
+const startX = (canvas.width - maxLineWidth) / 4; // Center horizontally
+const startY = (canvas.height - totalHeight) / 4; // Center vertically
+
+x = startX;
+y = startY;
+
+// Create particles and calculate target positions
+words.forEach(word => {
+  const wordWidth = ctx.measureText(word).width;
+
+  // Wrap text to next line if it exceeds canvas width
+  if (x + wordWidth > canvas.width - wordSpacing) {
     x = startX;
-    y = startY;
-
-    // Create particles and calculate target positions
-    words.forEach(word => {
-      const wordWidth = ctx.measureText(word).width;
-
-      // Wrap text to next line if it exceeds canvas width
-      if (x + wordWidth > canvas.width - wordSpacing) {
-        x = startX;
-        y += lineHeight;
-      }
-
-      particles.push(new WordParticle(word, x, y));
-      x += wordWidth + wordSpacing; // Add space between words
-    });
+    y += lineHeight;
   }
 
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.push(new WordParticle(word, x, y));
+  x += wordWidth + wordSpacing; // Add space between words
+});
+}
 
-    // Draw and update all particles
-    particles.forEach(particle => {
-      particle.draw();
-      particle.update();
-    });
+function animate() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    requestAnimationFrame(animate);
-  }
+// Draw and update all particles
+particles.forEach(particle => {
+  particle.update(cursor);
+  particle.draw();
+});
 
-  // Initialize the system
-  init();
-  animate();
+requestAnimationFrame(animate);
+}
+
+// Initialize the system
+init();
+animate();
 
   // Handle click to scatter text
   canvas.addEventListener('click', () => {
